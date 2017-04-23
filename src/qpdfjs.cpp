@@ -24,9 +24,11 @@ int main(int argc, char *argv[])
 		if (!pdf_fi.exists()) continue;
 		if (!pdf_path.endsWith(".pdf", Qt::CaseInsensitive)) continue;
 
+		pdf_path = pdf_fi.absoluteFilePath();
+
 		no_one = false;
 		QPdfJsWindow * w = new QPdfJsWindow(pdf_path);
-		w->resize(1000,1000);
+		//w->resize(1000,1000);
 		w->show();
 		windows.push_back(w);
 	}
@@ -34,7 +36,7 @@ int main(int argc, char *argv[])
 	if (no_one) {
 		QString pdf_path = app_path+"/empty.pdf";
 		QPdfJsWindow * w = new QPdfJsWindow(pdf_path);
-		w->resize(1000,1000);
+		//w->resize(1000,1000);
 		w->show();
 		windows.push_back(w);
 	}
