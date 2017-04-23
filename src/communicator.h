@@ -5,16 +5,16 @@
 
 class Communicator : public QObject {
 	Q_OBJECT
-	Q_PROPERTY(QString data READ data WRITE setData NOTIFY dataChanged)
-	QString m_data;
+	Q_PROPERTY(QString url READ url WRITE setUrl NOTIFY urlChanged)
+	QString m_url;
 public:
-	explicit Communicator(QObject *parent = nullptr) : QObject(parent) {}
+	explicit Communicator(QObject * p = nullptr) : QObject(p) {}
 
-	QString data() const { return m_data; }
-	void setData(const QString &data);
+	QString url() const { return m_url; }
+	void setUrl(const QString &url);
 
 signals:
-	void dataChanged(const QString &);
+	void urlChanged(const QString &);
 };
 
 #endif
