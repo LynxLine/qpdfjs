@@ -2,14 +2,18 @@
 #include <QTimer>
 #include <QApplication>
 #include <QWebEngineView>
+#include <QWebChannel>
 #include <QFile>
+#include <QDir>
 
 #include "src/qpdfjswindow.h"
+#include "src/communicator.h"
 
 class QPdfJsWindow::Private {
 public:
 	int progress;
 	QWebEngineView * view;
+	Communicator m_comm;
 };
 
 QPdfJsWindow::QPdfJsWindow(QWidget *parent) :
@@ -19,8 +23,19 @@ QPdfJsWindow::QPdfJsWindow(QWidget *parent) :
 	QString app_path = qApp->applicationDirPath();
 	auto url = QUrl::fromLocalFile(app_path+"/minified/web/viewer.html");
 
+	QDir dir(app_path+"/minified/web/");
+	QString pdf_path = app_path+"/1.pdf";
+	pdf_path = dir.relativeFilePath(pdf_path);
+	qDebug() << pdf_path;
+
+	d->m_comm.setData(pdf_path);
+
 	d->progress = 0;
 	d->view = new QWebEngineView(this);
+
+	QWebChannel * channel = new QWebChannel(this);
+	channel->registerObject(QStringLiteral("communicator"), &d->m_comm);
+	d->view->page()->setWebChannel(channel);
 
 	d->view->load(url);
 	setCentralWidget(d->view);
