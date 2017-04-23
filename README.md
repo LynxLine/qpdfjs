@@ -21,4 +21,8 @@ to generate Makefiles and build the QPdfJs with make command:
     $ qmake qpdfjs.pro
     $ make release
     
-    
+## Usage 
+
+QPdfJs is simple desktop application. It can be excuted with command line arguments - list of qpdf files to be opened and shown.
+
+    $ qpdfjs file1.pdf file2.pdf
