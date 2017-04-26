@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QSettings>
 #include <QFileInfo>
+#include <QDir>
 
 int main(int argc, char *argv[])
 {
