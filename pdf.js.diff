@@ -1,0 +1,40 @@
+diff --git a/web/viewer.html b/web/viewer.html
+index d08f639..39b7d9f 100644
+--- a/web/viewer.html
++++ b/web/viewer.html
+@@ -44,6 +44,8 @@ See https://github.com/adobe-type-tools/cmap-resources
+ 	<link rel="resource" type="application/l10n" href="locale/locale.properties">
+ <!--#endif-->
+ 
++	<script src="qwebchannel.js"></script>
++
+ <!--#if !PRODUCTION-->
+ 	<script src="../src/shared/compatibility.js"></script>
+ <!--#endif-->
+diff --git a/web/viewer.js b/web/viewer.js
+index 01f2798..d87d3eb 100644
+--- a/web/viewer.js
++++ b/web/viewer.js
+@@ -18,6 +18,14 @@
+ 
+ var DEFAULT_URL = 'compressed.tracemonkey-pldi-09.pdf';
+ 
++new QWebChannel(qt.webChannelTransport
++	,function(channel) {
++
++		document.getElementById('download').setAttribute('hidden', 'true');
++
++		var comm = channel.objects.communicator;
++		DEFAULT_URL = comm.url;
++
+ if (typeof PDFJSDev !== 'undefined' && PDFJSDev.test('CHROME')) {
+   (function rewriteUrlClosure() {
+ 	// Run this code outside DOMContentLoaded to make sure that the URL
+@@ -194,3 +202,7 @@ if (document.readyState === 'interactive' ||
+ } else {
+   document.addEventListener('DOMContentLoaded', webViewerLoad, true);
+ }
++
++	}
++);
++
